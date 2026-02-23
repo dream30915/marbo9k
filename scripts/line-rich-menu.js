@@ -41,7 +41,7 @@ function request(method, pathname, body, contentType) {
   return new Promise((resolve, reject) => {
     if (!contentType) contentType = "application/json";
     const opts = {
-      hostname: "api.line.me",
+      hostname: pathname.startsWith("/v2/bot/richmenu/") && pathname.endsWith("/content") ? "api-data.line.me" : "api.line.me",
       path: pathname,
       method,
       headers: {
@@ -62,7 +62,10 @@ function request(method, pathname, body, contentType) {
       let data = "";
       res.on("data", (c) => (data += c));
       res.on("end", () => {
-        if (res.statusCode >= 400) reject(new Error(res.statusCode + " " + data));
+        if (res.statusCode >= 400) {
+          console.error(`Error ${res.statusCode} on ${pathname}: ${data}`);
+          reject(new Error(res.statusCode + " " + data));
+        }
         else resolve(data ? JSON.parse(data) : {});
       });
     });
