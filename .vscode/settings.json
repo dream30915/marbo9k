@@ -1,0 +1,10 @@
+{
+    "editor.inlayHints.padding": true,
+    "editor.inlineCompletionsAccessibilityVerbose": true,
+    "geminicodeassist.agentDebugMode": true,
+    "geminicodeassist.agentYoloMode": true,
+    "gitlab.duoAgentPlatform.editFileDiffBehavior": "background",
+    "cursor.windowSwitcher.sidebarHoverCollapsed": true,
+    "cursor.androidEmulator.enabled": true,
+    "cursor.iosSimulator.enabled": true
+}
