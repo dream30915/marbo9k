@@ -4,13 +4,21 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 
 export default async function LiffPage() {
-  const supabase = await createClient();
-  const { data: products, error } = await supabase
-    .from("products")
-    .select("id, name, price, image_url, is_active")
-    .eq("is_active", true)
-    .order("created_at", { ascending: false })
-    .limit(20);
+  let products: { id: string; name: string; price: number; image_url: string | null; is_active: boolean }[] | null = null;
+  let error: Error | null = null;
+  try {
+    const supabase = await createClient();
+    const result = await supabase
+      .from("products")
+      .select("id, name, price, image_url, is_active")
+      .eq("is_active", true)
+      .order("created_at", { ascending: false })
+      .limit(20);
+    products = result.data;
+    error = result.error as Error | null;
+  } catch (e) {
+    error = e instanceof Error ? e : new Error("Supabase connection failed");
+  }
 
   return (
     <main className="p-4 pb-8">
@@ -18,8 +26,8 @@ export default async function LiffPage() {
 
       {error && (
         <p className="text-sm text-amber-600 dark:text-amber-400 mb-4">
-          ยังเชื่อมต่อ Supabase ไม่ได้ — ตั้งค่า .env.local และรัน SQL ใน
-          supabase/migrations
+          ยังเชื่อมต่อ Supabase ไม่ได้ — ใส่ NEXT_PUBLIC_SUPABASE_URL และ
+          NEXT_PUBLIC_SUPABASE_ANON_KEY ใน Vercel → Settings → Environment Variables แล้ว Redeploy
         </p>
       )}
 

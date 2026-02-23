@@ -4,12 +4,20 @@ import { Button } from "@/components/ui/button";
 import Link from "next/link";
 
 export default async function AdminPage() {
-  const supabase = await createClient();
-  const { data: products, error } = await supabase
-    .from("products")
-    .select("id, name, price, stock, is_active, created_at")
-    .order("created_at", { ascending: false })
-    .limit(50);
+  let products: { id: string; name: string; price: number; stock: number; is_active: boolean; created_at: string }[] | null = null;
+  let error: Error | null = null;
+  try {
+    const supabase = await createClient();
+    const result = await supabase
+      .from("products")
+      .select("id, name, price, stock, is_active, created_at")
+      .order("created_at", { ascending: false })
+      .limit(50);
+    products = result.data;
+    error = result.error as Error | null;
+  } catch (e) {
+    error = e instanceof Error ? e : new Error("Supabase connection failed");
+  }
 
   return (
     <div className="space-y-6">
@@ -23,8 +31,9 @@ export default async function AdminPage() {
         <Card className="border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30">
           <CardContent className="pt-6">
             <p className="text-sm text-amber-800 dark:text-amber-200">
-              ยังเชื่อมต่อ Supabase ไม่ได้ — ใส่ .env.local และรัน SQL ใน
-              supabase/migrations/001_initial_schema.sql
+              ยังเชื่อมต่อ Supabase ไม่ได้ — ใส่ NEXT_PUBLIC_SUPABASE_URL และ
+              NEXT_PUBLIC_SUPABASE_ANON_KEY ใน Vercel Environment Variables
+              แล้ว Redeploy (และรัน SQL ใน supabase/migrations)
             </p>
           </CardContent>
         </Card>
