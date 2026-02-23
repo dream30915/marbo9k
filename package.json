@@ -7,9 +7,12 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
-    "deploy:github": "node scripts/create-repo-and-push.js"
+    "deploy:github": "node scripts/create-repo-and-push.js",
+    "line:richmenu": "node scripts/line-rich-menu.js",
+    "seed:products": "node scripts/seed-products.js"
   },
   "dependencies": {
+    "@line/liff": "^2.27.3",
     "@radix-ui/react-slot": "^1.0.2",
     "@supabase/ssr": "^0.5.0",
     "@supabase/supabase-js": "^2.97.0",

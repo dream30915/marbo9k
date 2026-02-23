@@ -78,4 +78,5 @@ npm run dev
 ## ขั้นตอนถัดไป (ถ้าต้องการ)
 
 - LINE LIFF: ใส่ `NEXT_PUBLIC_LIFF_ID` ใน .env.local และเชื่อมกับ LINE Developers
+- **LINE OA + Rich Menu:** ดูขั้นตอนใน `docs/LINE_SETUP.md` แล้วรัน `npm run line:richmenu` (ใส่ LINE_CHANNEL_ACCESS_TOKEN)
 - Google Maps: ใส่ `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` ถ้าใช้ที่อยู่/แผนที่

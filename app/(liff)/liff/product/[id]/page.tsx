@@ -1,8 +1,8 @@
 import { createClient } from "@/lib/supabase/server";
 import { notFound } from "next/navigation";
 import Link from "next/link";
-import { Button } from "@/components/ui/button";
 import { Card, CardContent } from "@/components/ui/card";
+import { AddToCartButton } from "@/components/liff/AddToCartButton";
 
 export default async function ProductPage({
   params,
@@ -47,7 +47,13 @@ export default async function ProductPage({
             )}
             <p className="mt-4 text-2xl font-bold text-emerald-600 dark:text-emerald-400">฿{Number(product.price).toLocaleString()}</p>
             <p className="text-sm text-muted-foreground">สต็อก {product.stock}</p>
-            <Button className="mt-6 w-full rounded-xl h-12 font-semibold bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600" size="lg">เพิ่มลงตะกร้า</Button>
+            <AddToCartButton
+              productId={product.id}
+              name={product.name}
+              price={Number(product.price)}
+              image_url={product.image_url}
+              stock={product.stock}
+            />
           </div>
         </CardContent>
       </Card>
