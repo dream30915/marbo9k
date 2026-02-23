@@ -13,14 +13,24 @@ export default function LiffLayout({
   return (
     <LiffProvider>
       <CartProvider>
-        <div className="min-h-screen max-w-lg mx-auto bg-background">
-          <header className="sticky top-0 z-10 border-b border-border/80 bg-background/80 backdrop-blur-xl px-4 py-3 flex items-center justify-between">
-            <h1 className="flex-1 text-center text-lg font-bold tracking-tight">Marbo9k</h1>
-            <div className="absolute right-4">
-              <CartHeader />
-            </div>
+        <div className="min-h-screen w-full max-w-md mx-auto bg-background/50 relative overflow-hidden bg-mesh">
+          {/* Animated Background Elements */}
+          <div className="absolute top-[-10%] left-[-10%] w-64 h-64 bg-primary/20 rounded-full mix-blend-multiply filter blur-[80px] animate-blob" />
+          <div className="absolute top-[20%] right-[-10%] w-64 h-64 bg-secondary/20 rounded-full mix-blend-multiply filter blur-[80px] animate-blob animation-delay-2000" />
+          <div className="absolute bottom-[-10%] left-[20%] w-64 h-64 bg-accent/20 rounded-full mix-blend-multiply filter blur-[80px] animate-blob animation-delay-4000" />
+
+          {/* Glass Navbar */}
+          <header className="sticky top-0 z-50 glass px-5 py-4 flex items-center justify-between transition-all duration-300 rounded-b-3xl">
+            <h1 className="text-xl font-extrabold tracking-tight text-gradient">
+              Marbo9k
+            </h1>
+            <CartHeader />
           </header>
-          {children}
+
+          {/* Main Content Area */}
+          <div className="relative z-10">
+            {children}
+          </div>
         </div>
       </CartProvider>
     </LiffProvider>
