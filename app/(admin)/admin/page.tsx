@@ -2,69 +2,106 @@ import { createClient } from "@/lib/supabase/server";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Package, ShoppingCart, TrendingUp, Plus, ExternalLink, MapPin } from "lucide-react";
 
 export default async function AdminPage() {
-  let products: { id: string; name: string; price: number; stock: number; is_active: boolean; created_at: string }[] | null = null;
-  let error: Error | null = null;
+  let products: any[] = [];
+  let orders: any[] = [];
+  let error: string | null = null;
+
   try {
     const supabase = await createClient();
-    const result = await supabase
-      .from("products")
-      .select("id, name, price, stock, is_active, created_at")
-      .order("created_at", { ascending: false })
-      .limit(50);
-    products = result.data;
-    error = result.error as Error | null;
+    const [pRes, oRes] = await Promise.all([
+      supabase.from("products").select("*").order("created_at", { ascending: false }),
+      supabase.from("orders").select("*, order_items(count)").order("created_at", { ascending: false }).limit(10)
+    ]);
+    products = pRes.data || [];
+    orders = oRes.data || [];
   } catch (e) {
-    error = e instanceof Error ? e : new Error("Supabase connection failed");
+    error = "เชื่อมต่อฐานข้อมูลไม่ได้";
   }
 
   return (
-    <div className="space-y-6">
-      <div className="flex items-center justify-between flex-wrap gap-3">
-        <h2 className="text-xl font-semibold">สินค้าทั้งหมด</h2>
-        <Button asChild className="rounded-full bg-sky-600 hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-600">
-          <Link href="/admin/products/new">+ เพิ่มสินค้า</Link>
+    <div className="space-y-8 p-2">
+      {/* Stats Overview */}
+      <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+        <div className="glass-card p-6 rounded-[2rem]">
+          <TrendingUp className="w-6 h-6 text-primary mb-2" />
+          <p className="text-xs font-bold opacity-60 uppercase">สินค้าทั้งหมด</p>
+          <p className="text-3xl font-black text-gradient">{products.length}</p>
+        </div>
+        <div className="glass-card p-6 rounded-[2rem]">
+          <ShoppingCart className="w-6 h-6 text-secondary mb-2" />
+          <p className="text-xs font-bold opacity-60 uppercase">ออเดอร์ใหม่</p>
+          <p className="text-3xl font-black text-gradient">{orders.filter(o => o.status === 'pending').length}</p>
+        </div>
+      </div>
+
+      <div className="flex items-center justify-between">
+        <h2 className="text-2xl font-black text-gradient flex items-center gap-2">
+          <Package className="w-6 h-6" /> สต็อกสินค้า
+        </h2>
+        <Button asChild className="rounded-full bg-primary text-white font-bold">
+          <Link href="/admin/products/new"><Plus className="w-4 h-4 mr-1" /> เพิ่มสินค้า</Link>
         </Button>
       </div>
-      {error && (
-        <Card className="border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30 rounded-2xl">
-          <CardContent className="pt-6">
-            <p className="text-sm text-amber-800 dark:text-amber-200">
-              ยังเชื่อมต่อ Supabase ไม่ได้ — ใส่ NEXT_PUBLIC_SUPABASE_URL และ
-              NEXT_PUBLIC_SUPABASE_ANON_KEY ใน Vercel Environment Variables
-              แล้ว Redeploy (และรัน SQL ใน supabase/migrations)
-            </p>
-          </CardContent>
-        </Card>
-      )}
-      <Card className="rounded-2xl border shadow-sm overflow-hidden">
-        <CardHeader className="pb-3">
-          <CardTitle className="text-base font-semibold">รายการสินค้า</CardTitle>
-        </CardHeader>
-        <CardContent>
-          {!error && (!products || products.length === 0) && (
-            <p className="text-muted-foreground text-sm py-6">ยังไม่มีสินค้า — กด + เพิ่มสินค้า</p>
-          )}
-          {!error && products && products.length > 0 && (
-            <ul className="divide-y divide-border">
-              {products.map((p) => (
-                <li key={p.id} className="flex items-center justify-between py-4 first:pt-0">
-                  <div>
-                    <span className="font-medium">{p.name}</span>
-                    <span className="text-muted-foreground ml-2 text-sm">
-                      ฿{Number(p.price).toLocaleString()} · สต็อก {p.stock}
-                    </span>
-                  </div>
-                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${p.is_active ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400" : "bg-muted text-muted-foreground"}`}>
-                    {p.is_active ? "ขาย" : "ปิด"}
-                  </span>
-                </li>
-              ))}
-            </ul>
-          )}
-        </CardContent>
-      </Card>
+
+      {/* Product List */}
+      <div className="grid gap-4">
+        {products.map((p) => (
+          <div key={p.id} className="glass-card p-5 rounded-[2rem] flex items-center justify-between group">
+            <div className="flex items-center gap-4">
+              <div className="w-12 h-12 rounded-2xl bg-primary/10 flex items-center justify-center font-bold text-primary">
+                {p.stock}
+              </div>
+              <div>
+                <p className="font-bold text-base">{p.name}</p>
+                <p className="text-xs opacity-60">฿{Number(p.price).toLocaleString()} · {p.is_active ? 'เปิดขายอยู่' : 'ปิดอยู่'}</p>
+              </div>
+            </div>
+            <div className={`w-3 h-3 rounded-full ${p.stock < 10 ? 'bg-destructive animate-pulse' : 'bg-emerald-500'}`} />
+          </div>
+        ))}
+      </div>
+
+      {/* Recent Orders */}
+      <div className="space-y-4">
+        <h2 className="text-2xl font-black text-gradient flex items-center gap-2">
+          <ShoppingCart className="w-6 h-6" /> ออเดอร์ล่าสุด
+        </h2>
+        <div className="grid gap-4">
+          {orders.map((o) => (
+            <div key={o.id} className="glass-card p-6 rounded-[2.5rem] relative overflow-hidden">
+              <div className="flex justify-between items-start mb-4">
+                <div>
+                  <p className="text-[10px] font-black opacity-40 uppercase">#{o.id.slice(0,8)}</p>
+                  <p className="font-bold text-lg">{o.customer_name || 'ลูกค้าทั่วไป'}</p>
+                  <p className="text-xs text-primary font-bold">{o.customer_phone}</p>
+                </div>
+                <div className="text-right">
+                  <p className="text-xl font-black text-gradient">฿{Number(o.total_amount).toLocaleString()}</p>
+                  <span className="text-[10px] bg-primary/10 text-primary px-2 py-1 rounded-full font-bold uppercase">{o.status}</span>
+                </div>
+              </div>
+              
+              <div className="bg-black/5 dark:bg-white/5 p-4 rounded-2xl text-xs space-y-2">
+                <p className="flex items-start gap-2 opacity-80">
+                  <MapPin className="w-3 h-3 mt-0.5 shrink-0" /> {o.shipping_address}
+                </p>
+                {o.customer_lat && (
+                  <a 
+                    href={`https://www.google.com/maps?q=${o.customer_lat},${o.customer_lng}`} 
+                    target="_blank"
+                    className="flex items-center gap-1 text-primary font-bold hover:underline"
+                  >
+                    <ExternalLink className="w-3 h-3" /> ดูตำแหน่งบน Google Maps
+                  </a>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 }

@@ -39,6 +39,11 @@ CREATE TABLE IF NOT EXISTS public.orders (
   line_user_id TEXT,
   status TEXT NOT NULL DEFAULT 'pending' CHECK (status IN ('pending','confirmed','shipped','delivered','cancelled')),
   total_amount NUMERIC(12,2) NOT NULL CHECK (total_amount >= 0),
+  shipping_address TEXT,
+  customer_lat NUMERIC(10,7),
+  customer_lng NUMERIC(10,7),
+  customer_name TEXT,
+  customer_phone TEXT,
   created_at TIMESTAMPTZ NOT NULL DEFAULT now(),
   updated_at TIMESTAMPTZ NOT NULL DEFAULT now()
 );
