@@ -66,8 +66,16 @@ npm run dev
 
 หมายเหตุ: ไฟล์ `.env.local` ไม่ถูก push ขึ้น Git — ต้องไปใส่ใน Vercel เอง
 
-## ขั้นตอนถัดไป (Step 2)
+## ตั้งค่า Supabase (ทำครั้งเดียว)
 
-- ตั้งค่า Supabase client
-- สคริปต์ SQL สร้างตารางและ Storage
-- ไฟล์ `.env.local` สำหรับ API Keys
+1. สร้างโปรเจกต์ที่ [supabase.com](https://supabase.com) → เอา URL กับ anon key จาก Settings → API
+2. Copy `.env.example` เป็น `.env.local` แล้วใส่ `NEXT_PUBLIC_SUPABASE_URL` และ `NEXT_PUBLIC_SUPABASE_ANON_KEY`
+3. รัน SQL: เปิด Supabase Dashboard → SQL Editor → copy เนื้อหาจาก `supabase/migrations/001_initial_schema.sql` → Run
+4. (ถ้าต้องอัปโหลดรูปสินค้า) สร้าง Storage bucket ชื่อ `products` แบบ public ตาม `supabase/README.md`
+
+จากนั้นรัน `npm run dev` — หน้า /admin จะแสดงรายการสินค้าและปุ่มเพิ่มสินค้า หน้า /liff จะแสดงหน้าร้าน
+
+## ขั้นตอนถัดไป (ถ้าต้องการ)
+
+- LINE LIFF: ใส่ `NEXT_PUBLIC_LIFF_ID` ใน .env.local และเชื่อมกับ LINE Developers
+- Google Maps: ใส่ `NEXT_PUBLIC_GOOGLE_MAPS_API_KEY` ถ้าใช้ที่อยู่/แผนที่
