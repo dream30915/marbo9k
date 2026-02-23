@@ -1,9 +1,9 @@
 import { createServerClient } from "@supabase/ssr";
 import { cookies } from "next/headers";
 
-const PLACEHOLDER_URL = "https://placeholder.supabase.co";
+const PLACEHOLDER_URL = "https://ucazopgrxuuqobdwvpvk.supabase.co";
 const PLACEHOLDER_KEY =
-  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InBsYWNlaG9sZGVyIiwicm9sZSI6ImFub24iLCJpYXQiOjB9.x";
+  "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InVjYXpvcGdyeHV1cW9iZHd2cHZrIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTU4OTQ0MDB9.x"; // Fallback key (needs real one in Vercel)
 
 export async function createClient() {
   const cookieStore = await cookies();
