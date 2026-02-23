@@ -1,7 +1,6 @@
 import { createClient } from "@/lib/supabase/server";
 import Link from "next/link";
 import { Card, CardContent } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
 
 export default async function LiffPage() {
   let products: { id: string; name: string; price: number; image_url: string | null; is_active: boolean }[] | null = null;
@@ -21,49 +20,48 @@ export default async function LiffPage() {
   }
 
   return (
-    <main className="p-4 pb-8">
-      <h1 className="text-xl font-semibold mb-4">หน้าร้าน (LIFF)</h1>
+    <main className="p-4 pb-12">
+      <p className="text-xs font-medium uppercase tracking-wider text-muted-foreground mb-5">สินค้า</p>
 
       {error && (
-        <p className="text-sm text-amber-600 dark:text-amber-400 mb-4">
-          ยังเชื่อมต่อ Supabase ไม่ได้ — ใส่ NEXT_PUBLIC_SUPABASE_URL และ
-          NEXT_PUBLIC_SUPABASE_ANON_KEY ใน Vercel → Settings → Environment Variables แล้ว Redeploy
-        </p>
+        <div className="rounded-xl border border-amber-200 bg-amber-50 dark:border-amber-800 dark:bg-amber-950/40 p-4 text-sm text-amber-800 dark:text-amber-200">
+          ยังเชื่อมต่อ Supabase ไม่ได้ — ใส่ NEXT_PUBLIC_SUPABASE_URL และ NEXT_PUBLIC_SUPABASE_ANON_KEY ใน Vercel แล้ว Redeploy
+        </div>
       )}
 
       {!error && (!products || products.length === 0) && (
-        <p className="text-muted-foreground text-sm">ยังไม่มีสินค้าในร้าน</p>
+        <div className="rounded-2xl border border-dashed border-border bg-muted/30 p-12 text-center text-muted-foreground text-sm">
+          ยังไม่มีสินค้าในร้าน
+        </div>
       )}
 
       {!error && products && products.length > 0 && (
-        <ul className="grid gap-4 sm:grid-cols-2">
+        <ul className="grid gap-5 sm:grid-cols-2">
           {products.map((p) => (
             <li key={p.id}>
-              <Card>
-                <CardContent className="p-0">
-                  {p.image_url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={p.image_url}
-                      alt={p.name}
-                      className="h-40 w-full object-cover rounded-t-lg"
-                    />
-                  ) : (
-                    <div className="h-40 w-full bg-muted rounded-t-lg flex items-center justify-center text-muted-foreground text-sm">
-                      ไม่มีรูป
+              <Link href={`/liff/product/${p.id}`}>
+                <Card className="overflow-hidden rounded-2xl border bg-card transition-all duration-200 hover:shadow-lg hover:ring-2 active:scale-[0.98] hover:ring-emerald-300 dark:hover:ring-emerald-600/50">
+                  <CardContent className="p-0">
+                    {p.image_url ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img
+                        src={p.image_url}
+                        alt={p.name}
+                        className="h-44 w-full object-cover"
+                      />
+                    ) : (
+                      <div className="h-44 w-full bg-gradient-to-br from-emerald-50 to-sky-50 dark:from-emerald-950/30 dark:to-sky-950/30 flex items-center justify-center text-muted-foreground text-xs">
+                        ไม่มีรูป
+                      </div>
+                    )}
+                    <div className="p-4">
+                      <p className="font-semibold text-foreground line-clamp-2">{p.name}</p>
+                      <p className="mt-1.5 text-emerald-600 dark:text-emerald-400 font-bold">฿{Number(p.price).toLocaleString()}</p>
+                      <span className="inline-block mt-2 text-xs font-medium text-primary">ดูรายละเอียด →</span>
                     </div>
-                  )}
-                  <div className="p-3">
-                    <p className="font-medium">{p.name}</p>
-                    <p className="text-sm text-muted-foreground">
-                      ฿{Number(p.price).toLocaleString()}
-                    </p>
-                    <Button size="sm" className="mt-2 w-full" asChild>
-                      <Link href={`/liff/product/${p.id}`}>ดูรายละเอียด</Link>
-                    </Button>
-                  </div>
-                </CardContent>
-              </Card>
+                  </CardContent>
+                </Card>
+              </Link>
             </li>
           ))}
         </ul>

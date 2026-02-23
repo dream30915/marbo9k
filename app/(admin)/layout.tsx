@@ -1,18 +1,14 @@
-/**
- * Layout สำหรับ Admin Dashboard
- * ออกแบบสำหรับแสดงผลบนจอคอมพิวเตอร์
- */
 export default function AdminLayout({
   children,
 }: {
   children: React.ReactNode;
 }) {
   return (
-    <div className="min-h-screen bg-muted/30">
-      <header className="border-b bg-background px-6 py-4">
-        <h1 className="text-lg font-semibold">Admin Dashboard</h1>
+    <div className="min-h-screen bg-background">
+      <header className="sticky top-0 z-10 border-b border-border/80 bg-background/80 backdrop-blur-xl px-6 py-4">
+        <h1 className="text-lg font-bold tracking-tight">Admin · Marbo9k</h1>
       </header>
-      <main className="p-6">{children}</main>
+      <main className="p-6 max-w-4xl mx-auto">{children}</main>
     </div>
   );
 }

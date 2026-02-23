@@ -20,34 +20,34 @@ export default async function ProductPage({
   if (error || !product || !product.is_active) notFound();
 
   return (
-    <main className="p-4 pb-8">
-      <Button variant="ghost" size="sm" asChild>
-        <Link href="/liff">← กลับหน้าร้าน</Link>
-      </Button>
-      <Card className="mt-4">
+    <main className="p-4 pb-12">
+      <Link href="/liff" className="inline-flex items-center gap-1 text-sm text-muted-foreground hover:text-foreground transition-colors -ml-1">
+        ← กลับหน้าร้าน
+      </Link>
+      <Card className="mt-5 overflow-hidden rounded-2xl border bg-card shadow-sm">
         <CardContent className="p-0">
           {product.image_url ? (
             // eslint-disable-next-line @next/next/no-img-element
             <img
               src={product.image_url}
               alt={product.name}
-              className="w-full aspect-video object-cover rounded-t-lg"
+              className="w-full aspect-video object-cover"
             />
           ) : (
-            <div className="w-full aspect-video bg-muted rounded-t-lg flex items-center justify-center text-muted-foreground">
+            <div className="w-full aspect-video bg-muted flex items-center justify-center text-muted-foreground text-sm">
               ไม่มีรูป
             </div>
           )}
-          <div className="p-4">
-            <h1 className="text-lg font-semibold">{product.name}</h1>
+          <div className="p-5">
+            <h1 className="text-xl font-bold tracking-tight">{product.name}</h1>
             {product.description && (
-              <p className="text-muted-foreground text-sm mt-1">
+              <p className="text-muted-foreground text-sm mt-2 leading-relaxed">
                 {product.description}
               </p>
             )}
-            <p className="mt-2 text-lg">฿{Number(product.price).toLocaleString()}</p>
+            <p className="mt-4 text-2xl font-bold text-emerald-600 dark:text-emerald-400">฿{Number(product.price).toLocaleString()}</p>
             <p className="text-sm text-muted-foreground">สต็อก {product.stock}</p>
-            <Button className="mt-4 w-full">เพิ่มลงตะกร้า</Button>
+            <Button className="mt-6 w-full rounded-xl h-12 font-semibold bg-emerald-600 hover:bg-emerald-700 dark:bg-emerald-500 dark:hover:bg-emerald-600" size="lg">เพิ่มลงตะกร้า</Button>
           </div>
         </CardContent>
       </Card>

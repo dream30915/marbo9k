@@ -21,14 +21,14 @@ export default async function AdminPage() {
 
   return (
     <div className="space-y-6">
-      <div className="flex items-center justify-between">
-        <h2 className="text-xl font-semibold">ยินดีต้อนรับสู่ระบบหลังบ้าน</h2>
-        <Button asChild>
-          <Link href="/admin/products/new">เพิ่มสินค้า</Link>
+      <div className="flex items-center justify-between flex-wrap gap-3">
+        <h2 className="text-xl font-semibold">สินค้าทั้งหมด</h2>
+        <Button asChild className="rounded-full bg-sky-600 hover:bg-sky-700 dark:bg-sky-500 dark:hover:bg-sky-600">
+          <Link href="/admin/products/new">+ เพิ่มสินค้า</Link>
         </Button>
       </div>
       {error && (
-        <Card className="border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30">
+        <Card className="border-amber-200 bg-amber-50 dark:border-amber-900 dark:bg-amber-950/30 rounded-2xl">
           <CardContent className="pt-6">
             <p className="text-sm text-amber-800 dark:text-amber-200">
               ยังเชื่อมต่อ Supabase ไม่ได้ — ใส่ NEXT_PUBLIC_SUPABASE_URL และ
@@ -38,25 +38,25 @@ export default async function AdminPage() {
           </CardContent>
         </Card>
       )}
-      <Card>
-        <CardHeader>
-          <CardTitle>สินค้าทั้งหมด</CardTitle>
+      <Card className="rounded-2xl border shadow-sm overflow-hidden">
+        <CardHeader className="pb-3">
+          <CardTitle className="text-base font-semibold">รายการสินค้า</CardTitle>
         </CardHeader>
         <CardContent>
           {!error && (!products || products.length === 0) && (
-            <p className="text-muted-foreground text-sm">ยังไม่มีสินค้า — กด เพิ่มสินค้า</p>
+            <p className="text-muted-foreground text-sm py-6">ยังไม่มีสินค้า — กด + เพิ่มสินค้า</p>
           )}
           {!error && products && products.length > 0 && (
-            <ul className="divide-y">
+            <ul className="divide-y divide-border">
               {products.map((p) => (
-                <li key={p.id} className="flex items-center justify-between py-3 first:pt-0">
+                <li key={p.id} className="flex items-center justify-between py-4 first:pt-0">
                   <div>
                     <span className="font-medium">{p.name}</span>
-                    <span className="text-muted-foreground ml-2">
+                    <span className="text-muted-foreground ml-2 text-sm">
                       ฿{Number(p.price).toLocaleString()} · สต็อก {p.stock}
                     </span>
                   </div>
-                  <span className={p.is_active ? "text-green-600" : "text-muted-foreground"}>
+                  <span className={`text-xs font-semibold px-2.5 py-1 rounded-full ${p.is_active ? "bg-emerald-100 text-emerald-700 dark:bg-emerald-900/50 dark:text-emerald-400" : "bg-muted text-muted-foreground"}`}>
                     {p.is_active ? "ขาย" : "ปิด"}
                   </span>
                 </li>
