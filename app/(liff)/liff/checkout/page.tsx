@@ -68,6 +68,8 @@ export default function CheckoutPage() {
             quantity: i.quantity,
             unit_price: i.price,
           })),
+          shipping_fee: 50,
+          total_amount: totalAmount + 50,
         }),
       });
 
@@ -234,13 +236,20 @@ export default function CheckoutPage() {
                 <span className="font-black text-sm">฿{(i.price * i.quantity).toLocaleString()}</span>
               </li>
             ))}
+            <li className="flex justify-between items-center pt-2 text-primary">
+              <div className="flex flex-col">
+                <span className="font-black text-[10px] uppercase tracking-widest">ค่าจัดส่ง</span>
+                <span className="text-[9px] font-bold opacity-70">Express Delivery</span>
+              </div>
+              <span className="font-black text-sm">฿50</span>
+            </li>
           </ul>
           <div className="mt-8 pt-6 border-t border-dashed border-white/10 flex justify-between items-end">
             <div>
               <p className="text-[10px] font-black text-muted-foreground uppercase tracking-widest mb-1 opacity-50">Total Amount</p>
-              <p className="text-xs font-bold text-primary">รวมภาษีมูลค่าเพิ่มแล้ว</p>
+              <p className="text-xs font-bold text-primary">รวมค่าจัดส่งแล้ว</p>
             </div>
-            <span className="text-3xl font-black text-gradient">฿{totalAmount.toLocaleString()}</span>
+            <span className="text-3xl font-black text-gradient">฿{(totalAmount + 50).toLocaleString()}</span>
           </div>
         </div>
       </div>

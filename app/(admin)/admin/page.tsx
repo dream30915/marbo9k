@@ -196,15 +196,32 @@ export default async function AdminPage() {
                     <MapPin className="w-3.5 h-3.5 shrink-0 mt-0.5" />
                     <span className="line-clamp-1 italic">{o.shipping_address || 'ไม่ระบุที่อยู่'}</span>
                   </div>
-                  {o.customer_lat && (
-                    <a
-                      href={`https://www.google.com/maps?q=${o.customer_lat},${o.customer_lng}`}
-                      target="_blank"
-                      className="flex items-center justify-center gap-2 py-2 rounded-xl bg-white dark:bg-black/20 font-bold text-[10px] uppercase tracking-widest hover:bg-primary hover:text-white transition-all shadow-sm"
-                    >
-                      <ExternalLink className="w-3 h-3" /> ดูตำแหน่งบนแผนที่
-                    </a>
-                  )}
+
+                  <div className="grid grid-cols-2 gap-2 mt-1">
+                    {o.customer_lat ? (
+                      <a
+                        href={`https://www.google.com/maps?q=${o.customer_lat},${o.customer_lng}`}
+                        target="_blank"
+                        className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-white dark:bg-black/20 font-bold text-[10px] uppercase tracking-widest hover:bg-primary hover:text-white transition-all shadow-sm border border-white/5"
+                      >
+                        <MapPin className="w-3 h-3" /> นำทาง (MAP)
+                      </a>
+                    ) : (
+                      <div className="py-2.5 rounded-xl bg-black/5 flex items-center justify-center opacity-30 text-[10px] font-bold">ไม่มีพิกัด</div>
+                    )}
+
+                    {o.slip_url ? (
+                      <a
+                        href={o.slip_url}
+                        target="_blank"
+                        className="flex items-center justify-center gap-2 py-2.5 rounded-xl bg-emerald-500/10 text-emerald-500 font-bold text-[10px] uppercase tracking-widest hover:bg-emerald-500 hover:text-white transition-all shadow-sm border border-emerald-500/20"
+                      >
+                        <ImageIcon className="w-3 h-3" /> ดูสลิป {o.is_verified && "✅"}
+                      </a>
+                    ) : (
+                      <div className="py-2.5 rounded-xl bg-black/5 flex items-center justify-center opacity-30 text-[10px] font-bold uppercase">ไม่มีสลิป</div>
+                    )}
+                  </div>
                 </div>
               </div>
             ))}
