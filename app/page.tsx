@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { ShoppingBag, Settings, ArrowRight, Sparkles, Zap, ShieldCheck, Star, Globe, ZapIcon } from "lucide-react";
+import { ShoppingBag, Settings, ArrowRight, Sparkles, Zap, ShieldCheck, Star, Globe, TrendingUp } from "lucide-react";
 
 export default function HomePage() {
   return (
@@ -25,8 +25,8 @@ export default function HomePage() {
             MARBO<span className="text-gradient">9K</span>
           </h1>
           <p className="text-xl md:text-2xl text-white/40 font-medium tracking-tight animate-in fade-in slide-in-from-bottom-10 duration-1000 delay-200">
-            Redefining the shopping experience for the next generation. <br className="hidden md:block" />
-            Seamlessly integrated with <span className="text-white font-bold">LINE LIFF</span>.
+            ยกระดับประสบการณ์การช้อปปิ้งออนไลน์ที่เหนือระดับ <br className="hidden md:block" />
+            เชื่อมต่อกับ <span className="text-white font-bold">LINE LIFF</span> อย่างสมบูรณ์แบบ
           </p>
         </div>
 
@@ -39,11 +39,11 @@ export default function HomePage() {
                 <div className="w-16 h-16 rounded-3xl bg-primary flex items-center justify-center mb-8 shadow-2xl shadow-primary/40 group-hover:rotate-6 transition-transform">
                   <ShoppingBag className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-4xl font-black mb-4 tracking-tight">Customer Portal</h3>
-                <p className="text-white/50 text-lg leading-relaxed">Experience our premium mobile shop within LINE. Browse, cart, and track with ease.</p>
+                <h3 className="text-4xl font-black mb-4 tracking-tight">หน้าร้านค้า</h3>
+                <p className="text-white/50 text-lg leading-relaxed">สัมผัสประสบการณ์การเลือกซื้อสินค้าผ่าน LINE ที่สะดวก รวดเร็ว และพรีเมียมที่สุด</p>
               </div>
               <div className="mt-12 flex items-center gap-3 text-primary font-black text-sm uppercase tracking-widest">
-                <span>Enter Store</span>
+                <span>เข้าชมร้านค้า</span>
                 <div className="w-8 h-8 rounded-full border border-primary/30 flex items-center justify-center group-hover:bg-primary group-hover:text-white transition-all">
                   <ArrowRight className="w-4 h-4" />
                 </div>
@@ -58,11 +58,11 @@ export default function HomePage() {
                 <div className="w-16 h-16 rounded-3xl bg-secondary flex items-center justify-center mb-8 shadow-2xl shadow-secondary/40 group-hover:-rotate-6 transition-transform">
                   <Settings className="w-8 h-8 text-white" />
                 </div>
-                <h3 className="text-4xl font-black mb-4 tracking-tight">Enterprise Admin</h3>
-                <p className="text-white/50 text-lg leading-relaxed">Manage your global inventory, track high-precision logistics, and analyze growth.</p>
+                <h3 className="text-4xl font-black mb-4 tracking-tight">ระบบจัดการ</h3>
+                <p className="text-white/50 text-lg leading-relaxed">จัดการสต็อก ติดตามออเดอร์ และวิเคราะห์ยอดขายผ่านแดชบอร์ดที่ทันสมัยที่สุด</p>
               </div>
               <div className="mt-12 flex items-center gap-3 text-secondary font-black text-sm uppercase tracking-widest">
-                <span>Control Center</span>
+                <span>จัดการระบบ</span>
                 <div className="w-8 h-8 rounded-full border border-secondary/30 flex items-center justify-center group-hover:bg-secondary group-hover:text-white transition-all">
                   <ArrowRight className="w-4 h-4" />
                 </div>
@@ -72,29 +72,35 @@ export default function HomePage() {
         </div>
 
         {/* Global Features Section */}
-        <div className="mt-32 pt-20 border-t border-white/5 w-full max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-12">
-          <div className="space-y-3">
-            <ZapIcon className="w-6 h-6 text-primary" />
+        <div className="mt-32 pt-20 border-t border-white/5 w-full max-w-6xl grid grid-cols-2 md:grid-cols-4 gap-12 animate-in fade-in slide-in-from-bottom-16 duration-1000 delay-700">
+          <div className="space-y-3 group">
+            <Zap className="w-6 h-6 text-primary group-hover:scale-110 transition-transform" />
             <h4 className="font-black text-sm uppercase tracking-widest">High Speed</h4>
-            <p className="text-xs text-white/30 leading-relaxed">Powered by Next.js 14 for lightning fast interactions.</p>
+            <p className="text-xs text-white/30 leading-relaxed">ประสิทธิภาพสูงสุดด้วย Next.js 14 และ Edge Runtime</p>
           </div>
-          <div className="space-y-3">
-            <Globe className="w-6 h-6 text-secondary" />
+          <div className="space-y-3 group">
+            <Globe className="w-6 h-6 text-secondary group-hover:scale-110 transition-transform" />
             <h4 className="font-black text-sm uppercase tracking-widest">Global Ready</h4>
-            <p className="text-xs text-white/30 leading-relaxed">Scalable infrastructure built on Supabase Cloud.</p>
+            <p className="text-xs text-white/30 leading-relaxed">โครงสร้างพื้นฐานระดับสากลบนหน่วยประมวลผล Supabase</p>
           </div>
-          <div className="space-y-3">
-            <ShieldCheck className="w-6 h-6 text-accent" />
+          <div className="space-y-3 group">
+            <ShieldCheck className="w-6 h-6 text-accent group-hover:scale-110 transition-transform" />
             <h4 className="font-black text-sm uppercase tracking-widest">Secure Core</h4>
-            <p className="text-xs text-white/30 leading-relaxed">Enterprise-grade security for every transaction.</p>
+            <p className="text-xs text-white/30 leading-relaxed">ความปลอดภัยระดับ Enterprise สำหรับทุกธุรกรรม</p>
           </div>
-          <div className="space-y-3">
-            <Star className="w-6 h-6 text-amber-400" />
-            <h4 className="font-black text-sm uppercase tracking-widest">Premium UX</h4>
-            <p className="text-xs text-white/30 leading-relaxed">Designed for ultimate user satisfaction and retention.</p>
+          <div className="space-y-3 group">
+            <TrendingUp className="w-6 h-6 text-emerald-400 group-hover:scale-110 transition-transform" />
+            <h4 className="font-black text-sm uppercase tracking-widest">Real-time</h4>
+            <p className="text-xs text-white/30 leading-relaxed">อัปเดตสต็อกและสถานะออเดอร์แบบเรียลไทม์ 100%</p>
           </div>
         </div>
       </div>
+
+      <footer className="relative z-10 py-12 border-t border-white/5 text-center">
+        <p className="text-white/20 text-[10px] font-black uppercase tracking-[0.3em]">
+          &copy; {new Date().getFullYear()} MARBO9K Premium E-Commerce Platform
+        </p>
+      </footer>
     </main>
   );
 }
