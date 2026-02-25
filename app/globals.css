@@ -87,7 +87,7 @@
   }
 
   .glass-card {
-    @apply bg-white/80 dark:bg-white/5 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_32px_64px_-12px_rgba(0, 0, 0, 0.1)];
+    @apply bg-white/80 dark:bg-white/5 backdrop-blur-2xl border border-white/20 dark:border-white/10 shadow-[0_32px_64px_-12px_#0000001a];
   }
 
   .text-gradient {
